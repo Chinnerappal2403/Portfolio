@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Naresh - .NET Developer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #0F172A 100%);
+            color: #F1F5F9;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #38BDF8, #0EA5E9);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #F1F5F9;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #38BDF8;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(45deg, #38BDF8, #0EA5E9);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="%23ffffff" stroke-width="0.5" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #38BDF8, #0EA5E9, #38BDF8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: slideInLeft 1s ease-out;
+        }
+
+        .hero .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            color: #94A3B8;
+            animation: slideInRight 1s ease-out 0.2s both;
+        }
+
+        .hero .description {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 3rem;
+            max-width: 600px;
+            animation: fadeInUp 1s ease-out 0.4s both;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #0EA5E9, #38BDF8);
+            color: #F1F5F9;
+            box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(14, 165, 233, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #38BDF8;
+            border: 2px solid #38BDF8;
+        }
+
+        .btn-secondary:hover {
+            background: #38BDF8;
+            color: #0F172A;
+            transform: translateY(-3px);
+        }
+
+        /* Animations */
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Section Styles */
+        section {
+            padding: 6rem 0;
+            position: relative;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            background: linear-gradient(45deg, #38BDF8, #0EA5E9);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-category {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 2rem;
+            border: 1px solid rgba(56, 189, 248, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .skill-category:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(56, 189, 248, 0.1);
+            border-color: rgba(56, 189, 248, 0.3);
+        }
+
+        .skill-category h3 {
+            color: #38BDF8;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .skill-tag {
+            background: linear-gradient(45deg, #38BDF8, #0EA5E9);
+            color: #F1F5F9;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Experience Section */
+        .experience-timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .experience-timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, #38BDF8, #0EA5E9);
+        }
+
+        .experience-item {
+            position: relative;
+            margin-bottom: 3rem;
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 2rem;
+            border: 1px solid rgba(56, 189, 248, 0.1);
+            margin-left: 2rem;
+        }
+
+        .experience-item::before {
+            content: '';
+            position: absolute;
+            left: -3rem;
+            top: 2rem;
+            width: 12px;
+            height: 12px;
+            background: #38BDF8;
+            border-radius: 50%;
+            border: 3px solid #0F172A;
+        }
+
+        .experience-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .experience-title {
+            font-size: 1.3rem;
+            color: #38BDF8;
+            margin-bottom: 0.5rem;
+        }
+
+        .experience-company {
+            font-size: 1.1rem;
+            color: #0EA5E9;
+        }
+
+        .experience-duration {
+            color: #94A3B8;
+            font-size: 0.9rem;
+        }
+
+        .experience-achievements {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .experience-achievements li {
+            margin-bottom: 0.5rem;
+            padding-left: 1rem;
+            position: relative;
+        }
+
+        .experience-achievements li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: #38BDF8;
+        }
+
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid rgba(56, 189, 248, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(56, 189, 248, 0.1);
+            border-color: rgba(56, 189, 248, 0.3);
+        }
+
+        .project-header {
+            background: linear-gradient(45deg, rgba(56, 189, 248, 0.1), rgba(14, 165, 233, 0.1));
+            padding: 1.5rem;
+        }
+
+        .project-title {
+            font-size: 1.3rem;
+            color: #38BDF8;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-role {
+            color: #0EA5E9;
+            font-size: 0.9rem;
+        }
+
+        .project-content {
+            padding: 1.5rem;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tech-tag {
+            background: rgba(56, 189, 248, 0.2);
+            color: #38BDF8;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+        }
+
+        .project-highlights {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .project-highlights li {
+            margin-bottom: 0.5rem;
+            padding-left: 1rem;
+            position: relative;
+            font-size: 0.9rem;
+        }
+
+        .project-highlights li::before {
+            content: '★';
+            position: absolute;
+            left: 0;
+            color: #0EA5E9;
+        }
+
+        /* Contact Section */
+        .contact-content {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #94A3B8;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-item:hover {
+            color: #38BDF8;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            background: rgba(15, 23, 42, 0.8);
+            margin-top: 2rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero .subtitle {
+                font-size: 1.2rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .experience-timeline {
+                padding-left: 1rem;
+            }
+
+            .experience-item {
+                margin-left: 1rem;
+            }
+
+            .contact-info {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* Scroll reveal animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.6s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <div class="logo">Naresh</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Naresh</h1>
+                <div class="subtitle">Full Stack .NET Developer</div>
+                <div class="description">
+                    Experienced .NET developer with 4+ years of expertise in designing scalable RESTful APIs, 
+                    microservices, and enterprise applications. Specialized in cloud-native development with Azure, 
+                    CI/CD automation, and performance optimization. Passionate about delivering robust backend 
+                    solutions that drive business success.
+                </div>
+                <div class="cta-buttons">
+                    <a href="#projects" class="btn btn-primary">View My Work</a>
+                    <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills">
+        <div class="container">
+            <h2 class="section-title reveal">Technical Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-category reveal">
+                    <h3>Backend Development</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">C#</span>
+                        <span class="skill-tag">ASP.NET Core</span>
+                        <span class="skill-tag">Web API</span>
+                        <span class="skill-tag">Entity Framework</span>
+                        <span class="skill-tag">Microservices</span>
+                    </div>
+                </div>
+                <div class="skill-category reveal">
+                    <h3>Frontend Development</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Angular</span>
+                        <span class="skill-tag">React.js</span>
+                        <span class="skill-tag">TypeScript</span>
+                        <span class="skill-tag">JavaScript</span>
+                        <span class="skill-tag">Redux</span>
+                    </div>
+                </div>
+                <div class="skill-category reveal">
+                    <h3>Database & Storage</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">SQL Server</span>
+                        <span class="skill-tag">PostgreSQL</span>
+                        <span class="skill-tag">MongoDB</span>
+                        <span class="skill-tag">Oracle</span>
+                        <span class="skill-tag">Redis</span>
+                    </div>
+                </div>
+                <div class="skill-category reveal">
+                    <h3>Cloud & DevOps</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Azure</span>
+                        <span class="skill-tag">AWS</span>
+                        <span class="skill-tag">Docker</span>
+                        <span class="skill-tag">Kubernetes</span>
+                        <span class="skill-tag">CI/CD</span>
+                    </div>
+                </div>
+                <div class="skill-category reveal">
+                    <h3>Integration & Messaging</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">RabbitMQ</span>
+                        <span class="skill-tag">Kafka</span>
+                        <span class="skill-tag">RESTful APIs</span>
+                        <span class="skill-tag">WebSockets</span>
+                        <span class="skill-tag">Event-Driven</span>
+                    </div>
+                </div>
+                <div class="skill-category reveal">
+                    <h3>Testing & Quality</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">NUnit</span>
+                        <span class="skill-tag">xUnit</span>
+                        <span class="skill-tag">Selenium</span>
+                        <span class="skill-tag">TDD</span>
+                        <span class="skill-tag">BDD</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="experience">
+        <div class="container">
+            <h2 class="section-title reveal">Professional Experience</h2>
+            <div class="experience-timeline">
+                <div class="experience-item reveal">
+                    <div class="experience-header">
+                        <div>
+                            <div class="experience-title">.NET Developer</div>
+                            <div class="experience-company">Accenture, India</div>
+                        </div>
+                        <div class="experience-duration">Apr 2021 - Aug 2023</div>
+                    </div>
+                    <ul class="experience-achievements">
+                        <li>Designed and maintained scalable RESTful APIs and microservices using ASP.NET Core for high-performance financial systems</li>
+                        <li>Integrated third-party APIs (payment gateways, identity verification) with focus on security and compliance</li>
+                        <li>Partnered with product and data teams to deliver backend features, reducing delivery time by 20%</li>
+                        <li>Improved system performance by optimizing SQL queries and adding Redis caching, cutting response time by 30%</li>
+                        <li>Built CI/CD pipelines with Azure DevOps, reducing release cycles by 15%</li>
+                        <li>Achieved 99.9% system uptime through effective production issue resolution</li>
+                    </ul>
+                </div>
+                
+                <div class="experience-item reveal">
+                    <div class="experience-header">
+                        <div>
+                            <div class="experience-title">.NET Developer</div>
+                            <div class="experience-company">Spark Technologies, India</div>
+                        </div>
+                        <div class="experience-duration">July 2019 - Mar 2021</div>
+                    </div>
+                    <ul class="experience-achievements">
+                        <li>Engineered scalable RESTful APIs using ASP.NET Core for Angular-based applications, reducing integration time by 30%</li>
+                        <li>Built internal developer tools using C# and scripting, boosting development efficiency by 40%</li>
+                        <li>Led peer code reviews and mentored junior developers, reducing post-deployment defects by 25%</li>
+                        <li>Implemented structured logging and monitoring tools, reducing MTTR by 35%</li>
+                        <li>Optimized SQL Server queries and database schemas, improving performance by 45%</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects">
+        <div class="container">
+            <h2 class="section-title reveal">Featured Projects</h2>
+            <div class="projects-grid">
+                <div class="project-card reveal">
+                    <div class="project-header">
+                        <div class="project-title">E-commerce Platform</div>
+                        <div class="project-role">Full Stack Developer</div>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-tech">
+                            <span class="tech-tag">.NET Core</span>
+                            <span class="tech-tag">React.js</span>
+                            <span class="tech-tag">Azure</span>
+                            <span class="tech-tag">SQL Server</span>
+                            <span class="tech-tag">Docker</span>
+                            <span class="tech-tag">Kubernetes</span>
+                        </div>
+                        <p>Developed a robust e-commerce platform supporting secure payment processing, real-time inventory updates, and personalized product recommendations with integrated microservices architecture.</p>
+                        <ul class="project-highlights">
+                            <li>Integrated Azure DevOps CI/CD pipeline for streamlined development lifecycle</li>
+                            <li>Utilized Docker containers and Kubernetes for scalable Azure cloud deployment</li>
+                            <li>Improved customer engagement by 40% through ML-powered product recommendations</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="project-card reveal">
+                    <div class="project-header">
+                        <div class="project-title">Real-time Messaging App</div>
+                        <div class="project-role">Backend Developer</div>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-tech">
+                            <span class="tech-tag">ASP.NET Core</span>
+                            <span class="tech-tag">RabbitMQ</span>
+                            <span class="tech-tag">SQL Server</span>
+                            <span class="tech-tag">Angular</span>
+                            <span class="tech-tag">WebSocket</span>
+                            <span class="tech-tag">AWS</span>
+                        </div>
+                        <p>Built a real-time messaging application enabling secure team communication with WebSocket-based notifications and RabbitMQ message brokering for optimal performance.</p>
+                        <ul class="project-highlights">
+                            <li>Reduced message delivery latency by 50% through optimized RabbitMQ configurations</li>
+                            <li>Implemented multi-threaded API calls to improve concurrency and minimize downtime</li>
+                            <li>Managed AWS cloud infrastructure ensuring high availability and scalability</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="container">
+            <h2 class="section-title reveal">Let's Connect</h2>
+            <div class="contact-content reveal">
+                <p>I'm actively seeking Senior .NET Developer or Backend Engineer opportunities. Let's discuss how I can contribute to your team's success.</p>
+                <div class="contact-info">
+                    <a href="tel:+12033909052" class="contact-item">
+                        <span>📞</span>
+                        <span>+1 (203) 390-9052</span>
+                    </a>
+                    <a href="mailto:c.naresh2499@gmail.com" class="contact-item">
+                        <span>✉️</span>
+                        <span>c.naresh2499@gmail.com</span>
+                    </a>
+                    <a href="http://www.linkedin.com/in/c-naresh-63849a341" class="contact-item" target="_blank">
+                        <span>💼</span>
+                        <span>LinkedIn</span>
+                    </a>
+                    <div class="contact-item">
+                        <span>📍</span>
+                        <span>New Haven, CT</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Naresh. Built with passion for .NET development.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Scroll reveal animation
+        const revealElements = document.querySelectorAll('.reveal');
+        
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
+
+        revealElements.forEach(element => {
+            revealObserver.observe(element);
+        });
+
+        // Navigation background on scroll
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 100) {
+                nav.style.background = 'rgba(15, 23, 42, 0.98)';
+            } else {
+                nav.style.background = 'rgba(15, 23, 42, 0.95)';
+            }
+        });
+
+        // Add some interactive hover effects
+        document.querySelectorAll('.skill-category, .project-card, .experience-item').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Add floating animation to hero background
+        const hero = document.querySelector('.hero');
+        let mouseX = 0, mouseY = 0;
+        
+        hero.addEventListener('mousemove', (e) => {
+            mouseX = (e.clientX / window.innerWidth) * 100;
+            mouseY = (e.clientY / window.innerHeight) * 100;
+            hero.style.background = `radial-gradient(circle at ${mouseX}% ${mouseY}%, rgba(56, 189, 248, 0.1) 0%, transparent 50%), linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #0F172A 100%)`;
+        });
+    </script>
+</body>
+</html>
